@@ -9,7 +9,7 @@ int playgame();
 int initialiseBoard();
 int boardPrint(int *board);
 int numToChar(int a);
-int getMove();
+int getMove(char xMove, int yMove);
 int playerScore(int colour, int *board);
 int coordFormula(int x, int y);
 
@@ -35,6 +35,9 @@ int main(void)
 int playgame()
 {
 
+    char xMove;
+    int yMove;
+
     printf("Enter Player 1's name, they will be black.\n");
     scanf("%s", BLACKPLAYER);
 
@@ -43,7 +46,9 @@ int playgame()
 
     boardPrint(initialiseBoard());
 
-    getMove();
+    printf("Enter Test Co-Ord\n");
+    scanf("%c%d", xMove, yMove);
+    getMove(xMove, yMove);
     
     // do
     // {
@@ -120,25 +125,22 @@ int numToChar(int a)
 
 }
 
-int getMove()
+int getMove(char xMove, int yMove)
 {
 
-    int yMove;
-    char xMove;
-
-    scanf("%c%d", xMove, yMove);
+    int xMoveInt;
 
     if (xMove = 'a')
     {
-        xMove = 1;
+        xMoveInt = 1;
     }
 
     else if (xMove = 'b')
     {
-        xMove = 2;
+        xMoveInt = 2;
     }
 
-    coordFormula(xMove, yMove);    
+    return coordFormula(xMoveInt, yMove);    
 
 }
 
