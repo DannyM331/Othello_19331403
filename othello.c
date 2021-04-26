@@ -20,7 +20,7 @@ int BLACK=1;
 int WHITE=2;
 
 int WINNER = 0;
-int BOARDSIZE = 64;
+int BOARDSIZE = 65;
 
 int main(void)
 {
@@ -42,14 +42,14 @@ int playgame()
 
     boardPrint(initialiseBoard());
     
-    do
-    {
-        printf("Black, please enter your move\n");
-        //getMove();
+    // do
+    // {
+    //     printf("Black, please enter your move\n");
+    //     //getMove();
 
-        printf("White, please enter your mover\n");
-        //getMove();
-    } while (WINNER == 0);
+    //     printf("White, please enter your mover\n");
+    //     //getMove();
+    // } while (WINNER == 0);
     
 
 }
@@ -60,7 +60,7 @@ int initialiseBoard()
     int i, j, counter = 0, *board;
     board = (int*)calloc(BOARDSIZE, sizeof(int));
 
-    for ( i = 0; i < 64; i++)
+    for ( i = 1; i <= 64; i++)
     {
         if ((i == 27) || (i == 36))
         {
@@ -132,7 +132,7 @@ int playerScore(int colour, int *board)
 
     int i, score = 0;
 
-    for ( i = 0; i < 64; i++)
+    for ( i = 1; i <= 64; i++)
     {
         if (board[i] == colour)
         {
