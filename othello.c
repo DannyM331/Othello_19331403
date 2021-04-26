@@ -10,6 +10,7 @@ int initialiseBoard();
 int boardPrint(int *board);
 int numToChar(int a);
 int getMove(char string[]);
+int playerScore(int colour);
 
 int BLACKPLAYER[MAX_NAME];
 int WHITEPLAYER[MAX_NAME];
@@ -44,10 +45,10 @@ int playgame()
     do
     {
         printf("Black, please enter your move\n");
-        getMove();
+        //getMove();
 
         printf("White, please enter your mover\n");
-        getMove();
+        //getMove();
     } while (WINNER == 0);
     
 
@@ -90,7 +91,7 @@ boardPrint(int *board)
 
     board = initialiseBoard();
 
-    printf("  a b c d e f g h\n");
+    printf("  a b c d e f g h [%s:%d  %s:%d]\n", "BLACK", playerScore(BLACK), "WHITE", playerScore(WHITE));
     
     for ( i = 0; i < 8; i++)
     {
@@ -123,5 +124,16 @@ int getMove(char string[])
     char xMove;
 
     scanf("%c%d", xMove, yMove);
+
+}
+
+int playerScore(int colour)
+{
+
+    for ( i = 0; i < count; i++)
+    {
+        /* code */
+    }
+    
 
 }
