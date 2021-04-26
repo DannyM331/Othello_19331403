@@ -15,7 +15,6 @@ int playerScore(int colour, int *board);
 int coordFormula(int x, int y);
 int turnTracker(int a);
 int boardUpdater(int a, int b, int *board);
-//int boardCopy(int *board);
 
 int BLACKPLAYER[MAX_NAME];
 int WHITEPLAYER[MAX_NAME];
@@ -55,7 +54,6 @@ int playgame()
     board = initialiseBoard();
     boardPrint(board);
     
-    //board1 = boardCopy(board);
     do
     {
         strcpy(name, turnTracker(turnCounter));
@@ -113,8 +111,6 @@ boardPrint(int *a)
 {
 
     int i, j, counter = 0;
-
-    //a = initialiseBoard();
 
     printf("  a b c d e f g h [%s:%d  %s:%d]\n", "BLACK", playerScore(BLACK, a), "WHITE", playerScore(WHITE, a));
     
@@ -237,20 +233,3 @@ int boardUpdater(int a, int b, int *board)
     
 
 }
-
-// int boardCopy(int *board)
-// {
-
-//     int *cpyBoard;
-
-//     cpyBoard = (int*)calloc(BOARDSIZE, sizeof(int)); 
-
-//     for (int i = 1; i <= 64; i++)
-//     {
-//         cpyBoard[i] = board[i];
-//     }
-    
-//     boardPrint(cpyBoard);
-
-//     return cpyBoard;
-// }
