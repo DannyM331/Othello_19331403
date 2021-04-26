@@ -39,7 +39,8 @@ int playgame()
 
     char xMove;
     int yMove;
-    int arraypos;
+    int Co_Ord;
+    char name[MAX_NAME];
 
     printf("Enter Player 1's name, they will be black.\n");
     scanf("%s", BLACKPLAYER);
@@ -49,25 +50,27 @@ int playgame()
 
     boardPrint(initialiseBoard());
 
-    printf("Enter X Co-Ord\n");
-    scanf(" %c", &xMove);
+    // printf("Enter X Co-Ord\n");
+    // scanf(" %c", &xMove);
 
-    printf("Enter Y Co-Ord\n");
-    scanf("%d", &yMove);
+    // printf("Enter Y Co-Ord\n");
+    // scanf("%d", &yMove);
 
-    arraypos = getMove(xMove, yMove);
-    printf("%d", arraypos);
+    // arraypos = getMove(xMove, yMove);
+    // printf("%d", arraypos);
     
     do
     {
-        printf("Your turn %s.\n", turnTracker());
+        strcpy(name, turnTracker());
+        printf("Your turn %s.\n", name);
         printf("Enter X Co-Ord\n");
         scanf(" %c", &xMove);
 
         printf("Enter Y Co-Ord\n");
         scanf("%d", &yMove);
-        getMove(xMove, yMove);
-
+        Co_Ord = getMove(xMove, yMove);
+        printf("%d", Co_Ord);
+        
         WINNER++;
     } while (WINNER != 10);
     
