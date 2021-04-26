@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <math.h>
 #include <stdlib.h>
+#include <string.h>
 
 #define MAX_NAME 20
 
@@ -46,8 +47,12 @@ int playgame()
 
     boardPrint(initialiseBoard());
 
-    printf("Enter Test Co-Ord\n");
-    scanf("%c%d", xMove, yMove);
+    printf("Enter X Co-Ord\n");
+    scanf(" %c", &xMove);
+    printf("Enter Y Co-Ord\n");
+    scanf("%d", &yMove);
+
+    //printf("%c %d", xMove, yMove);
     getMove(xMove, yMove);
     
     // do
@@ -129,18 +134,25 @@ int getMove(char xMove, int yMove)
 {
 
     int xMoveInt;
+    int answer;
+    char alphabet[8] = "abcdefg";
+    printf("Enter\n");
 
-    if (xMove = 'a')
+    for (int i = 0; i < 8; i++)
     {
-        xMoveInt = 1;
+        if (strcmp(&xMove, alphabet[i]) == NULL)
+        {
+            xMoveInt = i+1;
+            printf("%d", xMoveInt);
+        }
+        
     }
+    
 
-    else if (xMove = 'b')
-    {
-        xMoveInt = 2;
-    }
+    // answer = coordFormula(xMoveInt, yMove);
+    // return answer; 
 
-    return coordFormula(xMoveInt, yMove);    
+    //return xMoveInt; 
 
 }
 
