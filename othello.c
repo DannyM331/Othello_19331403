@@ -13,7 +13,8 @@ int numToChar(int a);
 int getMove(char xMove, int yMove);
 int playerScore(int colour, int *board);
 int coordFormula(int x, int y);
-int turnTracker();
+int turnTracker(int a);
+int boardUpdater(int a, int b, int *board);
 
 int BLACKPLAYER[MAX_NAME];
 int WHITEPLAYER[MAX_NAME];
@@ -41,6 +42,8 @@ int playgame()
     int yMove;
     int Co_Ord;
     char name[MAX_NAME];
+    int turnCounter = 1;
+    int *board;
 
     printf("Enter Player 1's name, they will be black.\n");
     scanf("%s", BLACKPLAYER);
@@ -48,20 +51,13 @@ int playgame()
     printf("Enter Player 2's name, they will be white.\n");
     scanf("%s", WHITEPLAYER);
 
-    boardPrint(initialiseBoard());
-
-    // printf("Enter X Co-Ord\n");
-    // scanf(" %c", &xMove);
-
-    // printf("Enter Y Co-Ord\n");
-    // scanf("%d", &yMove);
-
-    // arraypos = getMove(xMove, yMove);
-    // printf("%d", arraypos);
+    board = initialiseBoard();
+    boardPrint(board);
     
     do
     {
-        strcpy(name, turnTracker());
+        strcpy(name, turnTracker(turnCounter));
+
         printf("Your turn %s.\n", name);
         printf("Enter X Co-Ord\n");
         scanf(" %c", &xMove);
@@ -69,12 +65,18 @@ int playgame()
         printf("Enter Y Co-Ord\n");
         scanf("%d", &yMove);
         Co_Ord = getMove(xMove, yMove);
-        printf("%d", Co_Ord);
+        
+        do
+        {
+            boardUpdater(Co_Ord, turnCounter, board);
+            boardPrint(board);
+        } while (1 == 2);
+        
         
         WINNER++;
+        turnCounter++;
     } while (WINNER != 10);
     
-
 }
 
 int initialiseBoard()
@@ -99,8 +101,6 @@ int initialiseBoard()
         {
             board[i] = EMPTY;
         }
-        
-        
         
     }
 
@@ -157,7 +157,6 @@ int getMove(char xMove, int yMove)
         
     }
     
-
     answer = coordFormula(xMoveInt, yMove);
     //printf("%d", answer);
     return answer;
@@ -187,23 +186,21 @@ int coordFormula(int x, int y)
 {
 
     printf("Entered\n");
-    printf("%d %d\n", x, y);
+    //printf("%d %d\n", x, y);
     int arrayPosition, z;
     z = y;
 
     arrayPosition = (z - 1) * (8) + x;
-    // printf("%d", arrayPosition);
     return arrayPosition;
 }
 
-int turnTracker()
+int turnTracker(int a)
 {
 
-    int counter = 1;
     char Black[] = "Black";
     char White[] = "White";
 
-    if ((counter % 2) == 0)
+    if ((a % 2) == 0)
     {
         return White;
     }
@@ -213,5 +210,11 @@ int turnTracker()
         return Black;
     }
     
+}
+
+int boardUpdater(int a, int b, int *board)
+{
+
+
 
 }
