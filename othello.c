@@ -135,12 +135,12 @@ int getMove(char xMove, int yMove)
 
     int xMoveInt;
     int answer;
-    char alphabet[8] = "abcdefg";
+    char alphabet[9] = "abcdefgh";
     printf("Enter\n");
 
     for (int i = 0; i < 8; i++)
     {
-        if (strcmp(&xMove, alphabet[i]) == NULL)
+        if (xMove == alphabet[i])
         {
             xMoveInt = i+1;
             printf("%d", xMoveInt);
