@@ -9,8 +9,9 @@ int playgame();
 int initialiseBoard();
 int boardPrint(int *board);
 int numToChar(int a);
-int getMove(char string[]);
+int getMove();
 int playerScore(int colour, int *board);
+int coordFormula(int x, int y);
 
 int BLACKPLAYER[MAX_NAME];
 int WHITEPLAYER[MAX_NAME];
@@ -41,6 +42,8 @@ int playgame()
     scanf("%s", WHITEPLAYER);
 
     boardPrint(initialiseBoard());
+
+    getMove();
     
     // do
     // {
@@ -117,13 +120,25 @@ int numToChar(int a)
 
 }
 
-int getMove(char string[])
+int getMove()
 {
 
     int yMove;
     char xMove;
 
     scanf("%c%d", xMove, yMove);
+
+    if (xMove = 'a')
+    {
+        xMove = 1;
+    }
+
+    else if (xMove = 'b')
+    {
+        xMove = 2;
+    }
+
+    coordFormula(xMove, yMove);    
 
 }
 
@@ -142,5 +157,16 @@ int playerScore(int colour, int *board)
     }
     
     return score;
+
+}
+
+int coordFormula(int x, int y)
+{
+
+    int arrayPosition, z;
+    z = y;
+
+    arrayPosition = (z - 1) * (8) + x;
+    return arrayPosition;
 
 }
