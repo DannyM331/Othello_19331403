@@ -136,23 +136,21 @@ int getMove(char xMove, int yMove)
     int xMoveInt;
     int answer;
     char alphabet[9] = "abcdefgh";
-    printf("Enter\n");
 
     for (int i = 0; i < 8; i++)
     {
         if (xMove == alphabet[i])
         {
             xMoveInt = i+1;
-            printf("%d", xMoveInt);
+            
         }
         
     }
     
 
-    // answer = coordFormula(xMoveInt, yMove);
-    // return answer; 
+    answer = coordFormula(xMoveInt, yMove);
+    return answer; 
 
-    //return xMoveInt; 
 
 }
 
@@ -177,10 +175,12 @@ int playerScore(int colour, int *board)
 int coordFormula(int x, int y)
 {
 
+    printf("Entered\n");
+    printf("%d %d\n", x, y);
     int arrayPosition, z;
     z = y;
 
     arrayPosition = (z - 1) * (8) + x;
-    return arrayPosition;
+    printf("%d", arrayPosition);
 
 }
