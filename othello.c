@@ -15,9 +15,13 @@ int playerScore(int colour, int *board);
 int coordFormula(int x, int y);
 int turnTracker(int a);
 int boardUpdater(int a, int b, int *board);
+int legalMoveChecker(int colour, int coord, int *board);
+int pieceChange(int move, int colour, int *board, int directions[]);
 
 int BLACKPLAYER[MAX_NAME];
 int WHITEPLAYER[MAX_NAME];
+
+int DIRECTIONS[8] = {-9,-8,-7,-1,1,7,8,9};
 
 int EMPTY=0;
 int BLACK=1;
@@ -41,7 +45,7 @@ int playgame()
     char xMove;
     int yMove;
     int Co_Ord;
-    char name[MAX_NAME];
+    char colour[MAX_NAME];
     int turnCounter = 1;
     int *board, *board1;
 
@@ -56,9 +60,9 @@ int playgame()
     
     do
     {
-        strcpy(name, turnTracker(turnCounter));
+        strcpy(colour, turnTracker(turnCounter));
 
-        printf("Your turn %s.\n", name);
+        printf("Your turn %s.\n", colour);
         printf("Enter X Co-Ord\n");
         scanf(" %c", &xMove);
 
@@ -224,3 +228,27 @@ int boardUpdater(int a, int b, int *board)
     }    
 
 }
+
+int legalMoveChecker(int colour, int coord, int *board)
+{
+
+    int opposite, i;
+
+    if (colour == BLACK)
+    {
+        opposite = WHITE;
+    }
+    
+    if (colour == WHITE)
+    {
+        opposite = BLACK;
+    }
+    
+    if ((board[coord]) == EMPTY)
+    {
+        
+        
+    }
+    
+}
+
