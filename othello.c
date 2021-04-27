@@ -211,8 +211,6 @@ int turnTracker(int a)
 int boardUpdater(int a, int b, int *board)
 {
 
-    printf("Entered boardUpdater\n");
-
     if ((b % 2) == 0)
     {
         board[a] = WHITE;
@@ -223,13 +221,6 @@ int boardUpdater(int a, int b, int *board)
     {
         board[a] = BLACK;
         printf("%d", board[a]);
-    }
-    
-    for (int i = 1; i < 65; i++)
-    {
-        printf("%d ", board[i]);
-    }
-    printf("\n");
-    
+    }    
 
 }
