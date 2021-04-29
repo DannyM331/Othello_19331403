@@ -17,6 +17,7 @@ int turnTracker(int a);
 int boardUpdater(int a, int b, int *board);
 int legalMoveChecker(int colour, int coord, int *board);
 int pieceChange(int move, int colour, int *board, int directions[]);
+int turnTrackerInt(int a);
 
 int BLACKPLAYER[MAX_NAME];
 int WHITEPLAYER[MAX_NAME];
@@ -48,6 +49,8 @@ int playgame()
     char colour[MAX_NAME];
     int turnCounter = 1;
     int *board, *board1;
+    int flag;
+    int colourInt;
 
     printf("Enter Player 1's name, they will be black.\n");
     scanf("%s", BLACKPLAYER);
@@ -61,21 +64,34 @@ int playgame()
     do
     {
         strcpy(colour, turnTracker(turnCounter));
-
+        flag = 0;
+        colourInt = turnTrackerInt(turnCounter);
         printf("Your turn %s.\n", colour);
-        printf("Enter X Co-Ord\n");
-        scanf(" %c", &xMove);
 
-        printf("Enter Y Co-Ord\n");
-        scanf("%d", &yMove);
-        Co_Ord = getMove(xMove, yMove);
-        
         do
         {
-            boardUpdater(Co_Ord, turnCounter, board);
-            boardPrint(board);
-        } while (1 == 2);
-        
+            //printf("Your turn %s.\n", colour);
+            printf("Enter X Co-Ord\n");
+            scanf(" %c", &xMove);
+
+            printf("Enter Y Co-Ord\n");
+            scanf("%d", &yMove);
+            Co_Ord = getMove(xMove, yMove);
+
+            if (legalMoveChecker(colourInt, Co_Ord, board) == 1)
+            {
+                boardUpdater(Co_Ord, turnCounter, board);
+                boardPrint(board);
+                flag = 1;
+            }
+
+            else
+            {
+                printf("Your move was invalid.\n");
+            }
+            
+            
+        } while (flag = 0);
         
         WINNER++;
         turnCounter++;
@@ -248,7 +264,22 @@ int legalMoveChecker(int colour, int coord, int *board)
     {
         
         
+        
     }
     
 }
 
+int turnTrackerInt(int a)
+{
+
+    if ((a % 2) == 0)
+    {
+        return 2;
+    }
+    
+    else
+    {
+        return 1;
+    }
+    
+}
