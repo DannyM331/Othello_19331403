@@ -18,6 +18,7 @@ int boardUpdater(int a, int b, int *board);
 int legalMoveChecker(int colour, int coord, int *board);
 int pieceChange(int move, int colour, int *board, int directions[]);
 int turnTrackerInt(int a);
+int bracketChecker(int coord, int direction, int opposite, int colour, int *board);
 
 int BLACKPLAYER[MAX_NAME];
 int WHITEPLAYER[MAX_NAME];
@@ -245,10 +246,27 @@ int boardUpdater(int a, int b, int *board)
 
 }
 
+int turnTrackerInt(int a)
+{
+
+    if ((a % 2) == 0)
+    {
+        return 2;
+    }
+    
+    else
+    {
+        return 1;
+    }
+    
+}
+
 int legalMoveChecker(int colour, int coord, int *board)
 {
 
     int opposite, i;
+    int bracket[8];
+    int j = 0;
 
     if (colour == BLACK)
     {
@@ -263,23 +281,50 @@ int legalMoveChecker(int colour, int coord, int *board)
     if ((board[coord]) == EMPTY)
     {
         
-        
+        for ( i = 0; i < 8; i++)
+        {
+            if ((bracketChecker(coord, DIRECTIONS[i], opposite, colour, board)) == 1)
+            {
+                bracket[j] = coord + DIRECTIONS[i];
+            }
+            
+        }
         
     }
+
+    else
+    {
+        return 0;
+    }
+    
     
 }
 
-int turnTrackerInt(int a)
+int bracketChecker(int coord, int direction, int opposite, int colour, int *board)
 {
 
-    if ((a % 2) == 0)
+    int pieceChecker;
+
+    pieceChecker = coord + direction;
+
+    if (pieceChecker == opposite)
     {
-        return 2;
+        while (pieceChecker == opposite)
+        {
+            pieceChecker = pieceChecker + direction;
+            if (pieceChecker == colour)
+            {
+                /* code */
+            }
+            
+        }
+        
     }
     
     else
     {
-        return 1;
+        return 0;
     }
     
+
 }
