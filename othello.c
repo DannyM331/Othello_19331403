@@ -67,10 +67,11 @@ int playgame()
         strcpy(colour, turnTracker(turnCounter));
         colourInt = turnTrackerInt(turnCounter);
         printf("Your turn %s.\n", colour);
+        flag = 0;
 
-        do
+        while (flag == 0)
         {
-            flag = 0;
+            //flag = 0;
             printf("Enter X Co-Ord\n");
             scanf(" %c", &xMove);
 
@@ -91,8 +92,13 @@ int playgame()
                 flag = 1;
             }
             
+            else
+            {
+                printf("Invalid Input\n");
+            }
+            
   
-        } while (flag = 0);
+        }
         
         WINNER++;
         turnCounter++;
@@ -309,14 +315,20 @@ int legalMoveChecker(int colour, int coord, int *board)
         
         for ( i = 0; i < 8; i++)
         {
+            //printf("TEST\n");
             if ((validPosition(coord, DIRECTIONS[i], opposite, board)) == 1)
             {
+                //printf("TEST1\n");
                 if ((bracketChecker(coord, DIRECTIONS[i], opposite, colour, board)) == 1)
                 {
+                    //printf("TEST2\n");
                     return 1;
                 }
 
+                
+
             }
+            
             
         }
         
@@ -336,8 +348,11 @@ int validPosition(int coord, int direction, int opposite, int *board)
     int pieceChecker;
     pieceChecker = coord + direction;
 
+    //printf("TEST4\n");
+
     if (board[pieceChecker] == opposite)
     {
+        //printf("TEST5\n");
         return 1;
     }
 
