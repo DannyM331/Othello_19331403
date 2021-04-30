@@ -14,7 +14,7 @@ int getMove(char xMove, int yMove);
 int playerScore(int colour, int *board);
 int coordFormula(int x, int y);
 int turnTracker(int a);
-int boardUpdater(int a, int b, int *board);
+int boardUpdater(int coord, int b, int direction, int *board);
 int legalMoveChecker(int colour, int coord, int *board);
 int pieceChange(int move, int colour, int *board, int directions[]);
 int turnTrackerInt(int a);
@@ -62,11 +62,9 @@ int playgame()
 
     board = initialiseBoard();
     boardPrint(board);
-    //legalMoveChecker(colourInt, Co_Ord, board)
     do
     {
         strcpy(colour, turnTracker(turnCounter));
-        //flag = 0;
         colourInt = turnTrackerInt(turnCounter);
         printf("Your turn %s.\n", colour);
 
@@ -83,7 +81,12 @@ int playgame()
             if ((legalMoveChecker(colourInt, Co_Ord, board)) == 1)
             {
                 printf("was a legal move\n\n");
-                boardUpdater(Co_Ord, turnCounter, board);
+
+                for (int i = 0; i < 7; i++)
+                {
+                    boardUpdater(Co_Ord, turnCounter, DIRECTIONS[i], board);
+                }
+                
                 boardPrint(board);
                 flag = 1;
             }
@@ -129,8 +132,6 @@ boardPrint(int *a)
 {
 
     int i, j, counter = 0;
-
-    printf("\n");
 
     printf("  a b c d e f g h [%s:%d  %s:%d]\n", "BLACK", playerScore(BLACK, a), "WHITE", playerScore(WHITE, a));
     
@@ -228,20 +229,48 @@ int turnTracker(int a)
     
 }
 
-int boardUpdater(int a, int b, int *board)
+int boardUpdater(int coord, int b, int direction, int *board)
 {
+
+    int opposite, colour;
+    int pieceChecker = coord;
+    int needsToFlip[8];
+    int i = 0;
 
     if ((b % 2) == 0)
     {
-        board[a] = WHITE;
-        printf("%d", board[a]);
+        board[coord] = WHITE;
+        opposite = BLACK;
+        colour = WHITE;
     }
 
     else
     {
-        board[a] = BLACK;
-        printf("%d", board[a]);
-    }    
+        board[coord] = BLACK;
+        opposite = WHITE;
+        colour = BLACK;
+    }
+
+    if ((bracketChecker(coord, direction, opposite, colour, board)) == 1)
+    {
+        do
+        {
+            pieceChecker += direction;
+            if (board[pieceChecker] == opposite)
+            {
+                needsToFlip[i] = pieceChecker;
+                i++;
+            }
+        
+        } while (board[pieceChecker] == opposite);
+    
+    }
+    
+    for (int j = 0; j < i; j++)
+    {
+        board[needsToFlip[j]] = colour;
+    }
+    
 
 }
 
@@ -286,12 +315,10 @@ int legalMoveChecker(int colour, int coord, int *board)
                 {
                     return 1;
                 }
-                // return 1;
+
             }
             
         }
-
-        //return 1;
         
     }
 
