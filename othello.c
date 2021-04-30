@@ -18,6 +18,7 @@ int boardUpdater(int a, int b, int *board);
 int legalMoveChecker(int colour, int coord, int *board);
 int pieceChange(int move, int colour, int *board, int directions[]);
 int turnTrackerInt(int a);
+int validPosition(int coord, int direction, int opposite, int *board);
 int bracketChecker(int coord, int direction, int opposite, int colour, int *board);
 
 int BLACKPLAYER[MAX_NAME];
@@ -49,9 +50,9 @@ int playgame()
     int Co_Ord;
     char colour[MAX_NAME];
     int turnCounter = 1;
-    int *board, *board1;
-    int flag;
-    int colourInt;
+    int *board;
+    int flag = 0;
+    int colourInt, test;
 
     printf("Enter Player 1's name, they will be black.\n");
     scanf("%s", BLACKPLAYER);
@@ -61,17 +62,17 @@ int playgame()
 
     board = initialiseBoard();
     boardPrint(board);
-    
+    //legalMoveChecker(colourInt, Co_Ord, board)
     do
     {
         strcpy(colour, turnTracker(turnCounter));
-        flag = 0;
+        //flag = 0;
         colourInt = turnTrackerInt(turnCounter);
         printf("Your turn %s.\n", colour);
 
         do
         {
-            //printf("Your turn %s.\n", colour);
+            flag = 0;
             printf("Enter X Co-Ord\n");
             scanf(" %c", &xMove);
 
@@ -79,19 +80,15 @@ int playgame()
             scanf("%d", &yMove);
             Co_Ord = getMove(xMove, yMove);
 
-            if (legalMoveChecker(colourInt, Co_Ord, board) == 1)
+            if ((legalMoveChecker(colourInt, Co_Ord, board)) == 1)
             {
+                printf("was a legal move\n\n");
                 boardUpdater(Co_Ord, turnCounter, board);
                 boardPrint(board);
                 flag = 1;
             }
-
-            else
-            {
-                printf("Your move was invalid.\n");
-            }
             
-            
+  
         } while (flag = 0);
         
         WINNER++;
@@ -103,7 +100,7 @@ int playgame()
 int initialiseBoard()
 {
 
-    int i, j, counter = 0, *board;
+    int i, *board;
     board = (int*)calloc(BOARDSIZE, sizeof(int));
 
     for ( i = 1; i <= 64; i++)
@@ -133,6 +130,8 @@ boardPrint(int *a)
 
     int i, j, counter = 0;
 
+    printf("\n");
+
     printf("  a b c d e f g h [%s:%d  %s:%d]\n", "BLACK", playerScore(BLACK, a), "WHITE", playerScore(WHITE, a));
     
     for ( i = 0; i < 8; i++)
@@ -154,7 +153,7 @@ boardPrint(int *a)
 int numToChar(int a)
 {
 
-    char charArray[4] = ".WB";
+    char charArray[4] = ".BW";
     return charArray[a];
 
 }
@@ -265,8 +264,6 @@ int legalMoveChecker(int colour, int coord, int *board)
 {
 
     int opposite, i;
-    int bracket[8];
-    int j = 0;
 
     if (colour == BLACK)
     {
@@ -283,12 +280,18 @@ int legalMoveChecker(int colour, int coord, int *board)
         
         for ( i = 0; i < 8; i++)
         {
-            if ((bracketChecker(coord, DIRECTIONS[i], opposite, colour, board)) == 1)
+            if ((validPosition(coord, DIRECTIONS[i], opposite, board)) == 1)
             {
-                bracket[j] = coord + DIRECTIONS[i];
+                if ((bracketChecker(coord, DIRECTIONS[i], opposite, colour, board)) == 1)
+                {
+                    return 1;
+                }
+                // return 1;
             }
             
         }
+
+        //return 1;
         
     }
 
@@ -300,6 +303,24 @@ int legalMoveChecker(int colour, int coord, int *board)
     
 }
 
+int validPosition(int coord, int direction, int opposite, int *board)
+{
+
+    int pieceChecker;
+    pieceChecker = coord + direction;
+
+    if (board[pieceChecker] == opposite)
+    {
+        return 1;
+    }
+
+    else
+    {
+        return 0;
+    }
+    
+}
+
 int bracketChecker(int coord, int direction, int opposite, int colour, int *board)
 {
 
@@ -307,24 +328,25 @@ int bracketChecker(int coord, int direction, int opposite, int colour, int *boar
 
     pieceChecker = coord + direction;
 
-    if (pieceChecker == opposite)
+    if (board[pieceChecker] == opposite)
     {
-        while (pieceChecker == opposite)
+        
+        while ((board[pieceChecker]) == opposite)
         {
-            pieceChecker = pieceChecker + direction;
-            if (pieceChecker == colour)
+            pieceChecker += direction;
+
+            if ((pieceChecker <= 8) || (pieceChecker >= 64) || (pieceChecker % 8 == 0) || ((pieceChecker - 1) % 8 == 0))
             {
-                /* code */
+                return 0;
             }
-            
+
+            else if (board[pieceChecker] == colour)
+            {
+                return 1;
+            }
+             
         }
         
     }
-    
-    else
-    {
-        return 0;
-    }
-    
 
 }
