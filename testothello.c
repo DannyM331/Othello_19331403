@@ -193,7 +193,7 @@ int getMove(char xMove, int yMove)
     int answer;
     char alphabet[9] = "abcdefgh";
 
-    for (int i = 1; i < 9; i++)
+    for (int i = 0; i < 9; i++)
     {
         if (xMove == alphabet[i])
         {
@@ -234,6 +234,16 @@ int coordFormula(int x, int y)
     z = y;
     w = x;
 
+    // if ((w == 1) && (z == 1))
+    // {
+    //     arrayPosition = (1 * (w * 8)) - 7;
+    // }
+    
+    // else
+    // {
+    //     arrayPosition = (z - 1) * (8) + (w);
+    // }
+    
     arrayPosition = (z - 1) * (8) + (w);
     return arrayPosition;
 }
@@ -374,10 +384,7 @@ int validPosition(int coord, int direction, int opposite, int *board)
         return 1;
     }
 
-    else
-    {
-        return 0;
-    }
+    
     
 }
 
@@ -430,8 +437,24 @@ int passChecker(int colour, int *board)
 int GameOver(int *board)
 {
 
-    if (((passChecker(BLACK, board)) != 1) && ((passChecker(WHITE, board)) != 1) || ((playerScore(BLACK, board)) + (playerScore(WHITE, board)) == 64))
+    int blackScore, whiteScore;
+
+    blackScore = playerScore(BLACK, board);
+    whiteScore = playerScore(WHITE, board);
+
+    if (((passChecker(BLACK, board)) != 1) && ((passChecker(WHITE, board)) != 1) || ((blackScore + whiteScore) == 64))
     {
+        if (blackScore > whiteScore)
+        {
+            printf("Black - %s has won the game!\nThe final score was [BLACK:%d  WHITE:%d]\n", BLACKPLAYER, blackScore, whiteScore);
+        }
+
+        else if (whiteScore > blackScore)
+        {
+            printf("White - %s has won the game!\nThe final score was [BLACK:%d  WHITE:%d]\n", WHITEPLAYER, blackScore, whiteScore);
+        }
+        
+        
         return 1;
     }
     
