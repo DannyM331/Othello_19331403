@@ -238,7 +238,7 @@ int coordFormula(int x, int y)
     z = y;
     w = x;
 
-    arrayPosition = (z - 1) * (8) + (w-1);
+    arrayPosition = (z - 1) * (8) + (w);
     return arrayPosition;
 }
 
@@ -340,13 +340,13 @@ int legalMoveChecker(int colour, int coord, int *board)
         
         for ( i = 0; i < 8; i++)
         {
-            //printf("TEST\n");
+            printf("TEST\n");
             if ((validPosition(coord, DIRECTIONS[i], opposite, board)) == 1)
             {
-                //printf("TEST1\n");
+                printf("TEST1\n");
                 if ((bracketChecker(coord, DIRECTIONS[i], opposite, colour, board)) == 1)
                 {
-                    //printf("TEST2\n");
+                    printf("TEST2\n");
                     return 1;
                 }
 
@@ -373,11 +373,11 @@ int validPosition(int coord, int direction, int opposite, int *board)
     int pieceChecker;
     pieceChecker = coord + direction;
 
-    //printf("TEST4\n");
+    printf("TEST4\n");
 
     if (board[pieceChecker] == opposite)
     {
-        //printf("TEST5\n");
+        printf("TEST5\n");
         return 1;
     }
 

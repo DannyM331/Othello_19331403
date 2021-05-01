@@ -9,6 +9,7 @@
 int playgame();
 int initialiseBoard();
 int boardPrint(int *a);
+// int numberToString(int a);
 int numToChar(int a);
 int getMove(char xMove, int yMove);
 int playerScore(int colour, int *board);
@@ -114,12 +115,12 @@ int initialiseBoard()
 
     for ( i = 1; i <= 64; i++)
     {
-        if ((i == 27) || (i == 36))
+        if ((i == 28) || (i == 37))
         {
             board[i] = WHITE;
         }
 
-        else if ((i == 28) || (i == 35))
+        else if ((i == 29) || (i == 36))
         {
             board[i] = BLACK;
         }
@@ -137,31 +138,55 @@ int initialiseBoard()
 boardPrint(int *a)
 {
 
-    int i, j, counter = 0;
+    int i, j, counter = 1;
 
-    printf("  a b c d e f g h [%s:%d  %s:%d]\n", "BLACK", playerScore(BLACK, a), "WHITE", playerScore(WHITE, a));
+    printf("   a   b   c   d   e   f   g   h [%s:%d  %s:%d]\n", "BLACK", playerScore(BLACK, a), "WHITE", playerScore(WHITE, a));
     
     for ( i = 0; i < 8; i++)
     {
         printf("%d ", i+1);
         for ( j = 0; j < 8; j++)
         {
-            printf("%c ", numToChar(a[counter]));
+            
+            if (a[counter] == 0)
+            {
+                printf("|_| ");
+            }
+
+            else
+            {
+                printf(" %c  ", numToChar(a[counter]));
+            }
+            
+            
             counter++;
         }
         
-        printf("\n");
+        printf("\n\n");
     }
     
     printf("\n");
 
 }
 
+// int numberToString(int a)
+// {
+
+//     char emptyBoard[4] = "|_|";
+
+//     if (a == 0)
+//     {
+//         return emptyBoard;
+//     }
+    
+
+// }
+
 int numToChar(int a)
 {
 
-    char charArray[4] = ".BW";
-    return charArray[a];
+    char charArray[3] = "BW";
+    return charArray[a-1];
 
 }
 
@@ -172,7 +197,7 @@ int getMove(char xMove, int yMove)
     int answer;
     char alphabet[9] = "abcdefgh";
 
-    for (int i = 0; i < 8; i++)
+    for (int i = 1; i < 9; i++)
     {
         if (xMove == alphabet[i])
         {
@@ -213,7 +238,7 @@ int coordFormula(int x, int y)
     z = y;
     w = x;
 
-    arrayPosition = (z - 1) * (8) + (w-1);
+    arrayPosition = (z - 1) * (8) + (w);
     return arrayPosition;
 }
 
@@ -315,13 +340,13 @@ int legalMoveChecker(int colour, int coord, int *board)
         
         for ( i = 0; i < 8; i++)
         {
-            //printf("TEST\n");
+            printf("TEST\n");
             if ((validPosition(coord, DIRECTIONS[i], opposite, board)) == 1)
             {
-                //printf("TEST1\n");
+                printf("TEST1\n");
                 if ((bracketChecker(coord, DIRECTIONS[i], opposite, colour, board)) == 1)
                 {
-                    //printf("TEST2\n");
+                    printf("TEST2\n");
                     return 1;
                 }
 
@@ -348,11 +373,11 @@ int validPosition(int coord, int direction, int opposite, int *board)
     int pieceChecker;
     pieceChecker = coord + direction;
 
-    //printf("TEST4\n");
+    printf("TEST4\n");
 
     if (board[pieceChecker] == opposite)
     {
-        //printf("TEST5\n");
+        printf("TEST5\n");
         return 1;
     }
 
