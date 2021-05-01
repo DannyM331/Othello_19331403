@@ -9,7 +9,6 @@
 int playgame();
 int initialiseBoard();
 int boardPrint(int *a);
-// int numberToString(int a);
 int numToChar(int a);
 int getMove(char xMove, int yMove);
 int playerScore(int colour, int *board);
@@ -21,6 +20,8 @@ int pieceChange(int move, int colour, int *board, int directions[]);
 int turnTrackerInt(int a);
 int validPosition(int coord, int direction, int opposite, int *board);
 int bracketChecker(int coord, int direction, int opposite, int colour, int *board);
+int passChecker(int colour, int *board);
+int GameOver(int *board);
 
 int BLACKPLAYER[MAX_NAME];
 int WHITEPLAYER[MAX_NAME];
@@ -80,30 +81,38 @@ int playgame()
             scanf("%d", &yMove);
             Co_Ord = getMove(xMove, yMove);
 
-            if ((legalMoveChecker(colourInt, Co_Ord, board)) == 1)
+            if ((passChecker(colourInt, board)) == 1)
             {
-                printf("was a legal move\n\n");
-
-                for (int i = 0; i < 7; i++)
+                if ((legalMoveChecker(colourInt, Co_Ord, board)) == 1)
                 {
-                    boardUpdater(Co_Ord, turnCounter, DIRECTIONS[i], board);
+                    printf("was a legal move\n\n");
+
+                    for (int i = 0; i < 8; i++)
+                    {
+                        boardUpdater(Co_Ord, turnCounter, DIRECTIONS[i], board);
+                    }
+                
+                    boardPrint(board);
+                    flag = 1;
+                }
+
+                else
+                {
+                    printf("Invalid Input\n");
                 }
                 
-                boardPrint(board);
-                flag = 1;
             }
             
             else
             {
-                printf("Invalid Input\n");
+                printf("%s has no valid moves, you must pass.\n", colour);
             }
             
   
         }
         
-        WINNER++;
         turnCounter++;
-    } while (WINNER != 10);
+    } while ((GameOver(board)) == 0);
     
 }
 
@@ -140,7 +149,7 @@ boardPrint(int *a)
 
     int i, j, counter = 1;
 
-    printf("   a   b   c   d   e   f   g   h [%s:%d  %s:%d]\n", "BLACK", playerScore(BLACK, a), "WHITE", playerScore(WHITE, a));
+    printf("   a   b   c   d   e   f   g   h  [%s:%d  %s:%d]\n", "BLACK", playerScore(BLACK, a), "WHITE", playerScore(WHITE, a));
     
     for ( i = 0; i < 8; i++)
     {
@@ -168,19 +177,6 @@ boardPrint(int *a)
     printf("\n");
 
 }
-
-// int numberToString(int a)
-// {
-
-//     char emptyBoard[4] = "|_|";
-
-//     if (a == 0)
-//     {
-//         return emptyBoard;
-//     }
-    
-
-// }
 
 int numToChar(int a)
 {
@@ -340,20 +336,17 @@ int legalMoveChecker(int colour, int coord, int *board)
         
         for ( i = 0; i < 8; i++)
         {
-            printf("TEST\n");
+            //printf("TEST\n");
             if ((validPosition(coord, DIRECTIONS[i], opposite, board)) == 1)
             {
-                printf("TEST1\n");
+                //printf("TEST1\n");
                 if ((bracketChecker(coord, DIRECTIONS[i], opposite, colour, board)) == 1)
                 {
-                    printf("TEST2\n");
+                    //printf("TEST2\n");
                     return 1;
                 }
 
-                
-
             }
-            
             
         }
         
@@ -373,11 +366,11 @@ int validPosition(int coord, int direction, int opposite, int *board)
     int pieceChecker;
     pieceChecker = coord + direction;
 
-    printf("TEST4\n");
+    //printf("TEST4\n");
 
     if (board[pieceChecker] == opposite)
     {
-        printf("TEST5\n");
+        //printf("TEST5\n");
         return 1;
     }
 
@@ -416,4 +409,35 @@ int bracketChecker(int coord, int direction, int opposite, int colour, int *boar
         
     }
 
+}
+
+int passChecker(int colour, int *board)
+{
+
+    int i;
+
+    for (int i = 1; i < 65; i++)
+    {
+        if ((legalMoveChecker(colour, i, board)) == 1)
+        {
+            return 1;
+        }
+        
+    }
+
+}
+
+int GameOver(int *board)
+{
+
+    if (((passChecker(BLACK, board)) != 1) && ((passChecker(WHITE, board)) != 1) || ((playerScore(BLACK, board)) + (playerScore(WHITE, board)) == 64))
+    {
+        return 1;
+    }
+    
+    else
+    {
+        return 0;
+    }
+    
 }
