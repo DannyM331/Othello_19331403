@@ -28,6 +28,8 @@ int BLACKPLAYER[MAX_NAME];
 int WHITEPLAYER[MAX_NAME];
 
 int DIRECTIONS[8] = {-9,-8,-7,-1,1,7,8,9};
+int DIRECTIONSH[5] = {-9,-8,-1,7,8};
+int DIRECTIONSA[5] = {-8,-7,1,8,9};
 
 int EMPTY=0;
 int BLACK=1;
@@ -392,20 +394,39 @@ int validPosition(int coord, int direction, int opposite, int *board)
 int bracketChecker(int coord, int direction, int opposite, int colour, int *board)
 {
 
-    int pieceChecker;
+    int pieceChecker, i;
 
     pieceChecker = coord + direction;
 
-    if ((coord % 8) == 0)
-    {
-        for ( i = 0; i < count; i++)
-        {
-            /* code */
-        }
-        
-    }
-    
+    // if ((coord % 8) == 0)
+    // {
+    //     for ( i = 0; i < 5; i++)
+    //     {
+    //         if (board[pieceChecker] == opposite)
+    //         {
+    //             while ((board[pieceChecker]) == opposite)
+    //             {
+    //                 pieceChecker += DIRECTIONSH[i];
+                    
+    //                 if ((pieceChecker <= 0) || (pieceChecker >= 64) || (pieceChecker % 8 == 0) || ((pieceChecker - 1) % 8 == 0))
+    //                 {
+    //                     return 0;
+    //                 }
 
+    //                 else if (board[pieceChecker] == colour)
+    //                 {
+    //                     return 1;
+    //                 }
+                    
+                    
+    //             }
+                
+    //         }
+            
+    //     }
+        
+    // }
+    
     if (board[pieceChecker] == opposite)
     {
         
@@ -413,7 +434,7 @@ int bracketChecker(int coord, int direction, int opposite, int colour, int *boar
         {
             pieceChecker += direction;
 
-            if ((pieceChecker <= 8) || (pieceChecker >= 64) || (pieceChecker % 8 == 0) || ((pieceChecker - 1) % 8 == 0))
+            if ((pieceChecker <= 0) || (pieceChecker >= 64) || (pieceChecker % 8 == 0) || ((pieceChecker - 1) % 8 == 0))
             {
                 return 0;
             }

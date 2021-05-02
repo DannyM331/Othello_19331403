@@ -22,11 +22,14 @@ int validPosition(int coord, int direction, int opposite, int *board);
 int bracketChecker(int coord, int direction, int opposite, int colour, int *board);
 int passChecker(int colour, int *board);
 int GameOver(int *board);
+char writeToFile(int black, int white);
 
 int BLACKPLAYER[MAX_NAME];
 int WHITEPLAYER[MAX_NAME];
 
 int DIRECTIONS[8] = {-9,-8,-7,-1,1,7,8,9};
+int DIRECTIONSH[5] = {-9,-8,-1,7,8};
+int DIRECTIONSA[5] = {-8,-7,1,8,9};
 
 int EMPTY=0;
 int BLACK=1;
@@ -193,7 +196,7 @@ int getMove(char xMove, int yMove)
     int answer;
     char alphabet[9] = "abcdefgh";
 
-    for (int i = 1; i < 9; i++)
+    for (int i = 0; i < 9; i++)
     {
         if (xMove == alphabet[i])
         {
@@ -234,6 +237,16 @@ int coordFormula(int x, int y)
     z = y;
     w = x;
 
+    // if ((w == 1) && (z == 1))
+    // {
+    //     arrayPosition = (1 * (w * 8)) - 7;
+    // }
+    
+    // else
+    // {
+    //     arrayPosition = (z - 1) * (8) + (w);
+    // }
+    
     arrayPosition = (z - 1) * (8) + (w);
     return arrayPosition;
 }
@@ -374,20 +387,46 @@ int validPosition(int coord, int direction, int opposite, int *board)
         return 1;
     }
 
-    else
-    {
-        return 0;
-    }
+    
     
 }
 
 int bracketChecker(int coord, int direction, int opposite, int colour, int *board)
 {
 
-    int pieceChecker;
+    int pieceChecker, i;
 
     pieceChecker = coord + direction;
 
+    // if ((coord % 8) == 0)
+    // {
+    //     for ( i = 0; i < 5; i++)
+    //     {
+    //         if (board[pieceChecker] == opposite)
+    //         {
+    //             while ((board[pieceChecker]) == opposite)
+    //             {
+    //                 pieceChecker += DIRECTIONSH[i];
+                    
+    //                 if ((pieceChecker <= 0) || (pieceChecker >= 64) || (pieceChecker % 8 == 0) || ((pieceChecker - 1) % 8 == 0))
+    //                 {
+    //                     return 0;
+    //                 }
+
+    //                 else if (board[pieceChecker] == colour)
+    //                 {
+    //                     return 1;
+    //                 }
+                    
+                    
+    //             }
+                
+    //         }
+            
+    //     }
+        
+    // }
+    
     if (board[pieceChecker] == opposite)
     {
         
@@ -395,7 +434,7 @@ int bracketChecker(int coord, int direction, int opposite, int colour, int *boar
         {
             pieceChecker += direction;
 
-            if ((pieceChecker <= 8) || (pieceChecker >= 64) || (pieceChecker % 8 == 0) || ((pieceChecker - 1) % 8 == 0))
+            if ((pieceChecker <= 0) || (pieceChecker >= 64) || (pieceChecker % 8 == 0) || ((pieceChecker - 1) % 8 == 0))
             {
                 return 0;
             }
@@ -430,8 +469,26 @@ int passChecker(int colour, int *board)
 int GameOver(int *board)
 {
 
-    if (((passChecker(BLACK, board)) != 1) && ((passChecker(WHITE, board)) != 1) || ((playerScore(BLACK, board)) + (playerScore(WHITE, board)) == 64))
+    int blackScore, whiteScore;
+
+    blackScore = playerScore(BLACK, board);
+    whiteScore = playerScore(WHITE, board);
+
+    if (((passChecker(BLACK, board)) != 1) && ((passChecker(WHITE, board)) != 1) || ((blackScore + whiteScore) == 64))
     {
+        if (blackScore > whiteScore)
+        {
+            printf("Black - %s has won the game!\nThe final score was [BLACK:%d  WHITE:%d]\n", BLACKPLAYER, blackScore, whiteScore);
+        }
+
+        else if (whiteScore > blackScore)
+        {
+            printf("White - %s has won the game!\nThe final score was [BLACK:%d  WHITE:%d]\n", WHITEPLAYER, blackScore, whiteScore);
+        }
+
+        
+        writeToFile(blackScore, whiteScore);
+        
         return 1;
     }
     
@@ -440,4 +497,31 @@ int GameOver(int *board)
         return 0;
     }
     
+}
+
+char writeToFile(int black, int white)
+{
+
+    FILE *fileptr;
+
+    if ((fopen("othello-results.txt", "w")) == NULL)
+    {
+        printf("Could not find / open othello-results.txt.\n");
+    }
+
+    else
+    {
+        if (black > white)
+        {
+            fprintf(fileptr, "%s Won! The score was [%s (Black):%d %s (White):%d]\n", BLACKPLAYER, BLACKPLAYER, black, WHITEPLAYER, white);
+        }
+
+        else
+        {
+            fprintf(fileptr, "%s Won! The score was [%s (Black):%d %s (White):%d]\n", WHITEPLAYER, BLACKPLAYER, black, WHITEPLAYER, white);
+        }
+        
+        
+    }
+
 }
