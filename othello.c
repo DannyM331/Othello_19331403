@@ -398,34 +398,63 @@ int bracketChecker(int coord, int direction, int opposite, int colour, int *boar
 
     pieceChecker = coord + direction;
 
-    // if ((coord % 8) == 0)
-    // {
-    //     for ( i = 0; i < 5; i++)
-    //     {
-    //         if (board[pieceChecker] == opposite)
-    //         {
-    //             while ((board[pieceChecker]) == opposite)
-    //             {
-    //                 pieceChecker += DIRECTIONSH[i];
+    if ((coord % 8) == 0)
+    {
+        for ( i = 0; i < 5; i++)
+        {
+            if (board[pieceChecker] == opposite)
+            {
+                while ((board[pieceChecker]) == opposite)
+                {
+                    pieceChecker += DIRECTIONSH[i];
                     
-    //                 if ((pieceChecker <= 0) || (pieceChecker >= 64) || (pieceChecker % 8 == 0) || ((pieceChecker - 1) % 8 == 0))
-    //                 {
-    //                     return 0;
-    //                 }
+                    if ((pieceChecker <= 0) || (pieceChecker >= 64) || (pieceChecker % 8 == 0) || ((pieceChecker - 1) % 8 == 0))
+                    {
+                        return 0;
+                    }
 
-    //                 else if (board[pieceChecker] == colour)
-    //                 {
-    //                     return 1;
-    //                 }
+                    else if (board[pieceChecker] == colour)
+                    {
+                        return 1;
+                    }
                     
                     
-    //             }
+                }
                 
-    //         }
+            }
             
-    //     }
+        }
         
-    // }
+    }
+
+    if (((coord - 1) % 8) == 0)
+    {
+        for ( i = 0; i < 5; i++)
+        {
+            if (board[pieceChecker] == opposite)
+            {
+                while ((board[pieceChecker]) == opposite)
+                {
+                    pieceChecker += DIRECTIONSA[i];
+                    
+                    if ((pieceChecker <= 0) || (pieceChecker >= 64) || (pieceChecker % 8 == 0) || ((pieceChecker - 1) % 8 == 0))
+                    {
+                        return 0;
+                    }
+
+                    else if (board[pieceChecker] == colour)
+                    {
+                        return 1;
+                    }
+                    
+                    
+                }
+                
+            }
+            
+        }
+        
+    }
     
     if (board[pieceChecker] == opposite)
     {
