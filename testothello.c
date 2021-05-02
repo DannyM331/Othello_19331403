@@ -22,6 +22,7 @@ int validPosition(int coord, int direction, int opposite, int *board);
 int bracketChecker(int coord, int direction, int opposite, int colour, int *board);
 int passChecker(int colour, int *board);
 int GameOver(int *board);
+char writeToFile(int black, int white);
 
 int BLACKPLAYER[MAX_NAME];
 int WHITEPLAYER[MAX_NAME];
@@ -395,6 +396,16 @@ int bracketChecker(int coord, int direction, int opposite, int colour, int *boar
 
     pieceChecker = coord + direction;
 
+    if ((coord % 8) == 0)
+    {
+        for ( i = 0; i < count; i++)
+        {
+            /* code */
+        }
+        
+    }
+    
+
     if (board[pieceChecker] == opposite)
     {
         
@@ -453,7 +464,9 @@ int GameOver(int *board)
         {
             printf("White - %s has won the game!\nThe final score was [BLACK:%d  WHITE:%d]\n", WHITEPLAYER, blackScore, whiteScore);
         }
+
         
+        writeToFile(blackScore, whiteScore);
         
         return 1;
     }
@@ -463,4 +476,31 @@ int GameOver(int *board)
         return 0;
     }
     
+}
+
+char writeToFile(int black, int white)
+{
+
+    FILE *fileptr;
+
+    if ((fopen("othello-results.txt", "w")) == NULL)
+    {
+        printf("Could not find / open othello-results.txt.\n");
+    }
+
+    else
+    {
+        if (black > white)
+        {
+            fprintf(fileptr, "%s Won! The score was [%s (Black):%d %s (White):%d]\n", BLACKPLAYER, BLACKPLAYER, black, WHITEPLAYER, white);
+        }
+
+        else
+        {
+            fprintf(fileptr, "%s Won! The score was [%s (Black):%d %s (White):%d]\n", WHITEPLAYER, BLACKPLAYER, black, WHITEPLAYER, white);
+        }
+        
+        
+    }
+
 }
