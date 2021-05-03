@@ -26,16 +26,20 @@ boardPrint(int *board)
 
     int i, j, k, counter = 1;
 
-    //printf("   a   b   c   d   e   f   g   h  [%s:%d  %s:%d]\n", "BLACK", playerScore(BLACK, a), "WHITE", playerScore(WHITE, a));
+    printf("   a   b   c   d   e   f   g   h\n");
     
-    for ( i = 0; i < 17; i++)
+    for ( i = 1; i < 18; i++)
     {
+        if ((i % 2) != 0)
+        {
+            printf("    ");
+        }
         
-        //printf("%d ", i+1);
-        
-        
+        else if ((i % 2) == 0)
+        {
+            printf("%3d ", i);
+        }
 
-        
         for ( j = 0; j < 17; j++)
         {
             
@@ -52,6 +56,16 @@ boardPrint(int *board)
             else if (board[counter] == 2)
             {
                 printf("   ");
+            }
+
+            else if (board[counter] == 3)
+            {
+                printf(" B ");
+            }
+
+            else if (board[counter] == 4)
+            {
+                printf(" W ");
             }
 
             else if (board[counter] == 5)
@@ -86,6 +100,16 @@ int setBoard(int *board)
             board[i] = L;
         }
 
+        else if ((counter == 127) || (counter == 163))
+        {
+            board[i] = W;
+        }
+
+        else if ((counter == 129) || (counter == 161))
+        {
+            board[i] = B;
+        }
+        
         else if (counter == 289)
         {
             board[i] = G;
