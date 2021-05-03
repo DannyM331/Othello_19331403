@@ -73,7 +73,7 @@ int setBoard(int *board)
 {
     int i, j, counter = 1, rowCounter = 1;
 
-    for ( i = 1; i < 289; i++)
+    for ( i = 1; i <= 289; i++)
     {
         
         if ((i % 17) == 0)
