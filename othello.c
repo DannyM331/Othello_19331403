@@ -454,10 +454,10 @@ int bracektEdgeChecker(int coord, int direction, int opposite, int colour, int *
                 return 1;
             }
 
-            else if ((pieceChecker <= 0) || (pieceChecker >= 64) || (pieceChecker % 8 == 0) || ((pieceChecker - 1) % 8 == 0))
-            {
-                return 0;
-            }
+            // else if ((pieceChecker <= 0) || (pieceChecker >= 64) || (pieceChecker % 8 == 0) || ((pieceChecker - 1) % 8 == 0))
+            // {
+            //     return 0;
+            // }
                     
                     
         }
@@ -472,64 +472,6 @@ int bracketChecker(int coord, int direction, int opposite, int colour, int *boar
     int pieceChecker, i;
 
     pieceChecker = coord + direction;
-
-    // if ((coord % 8) == 0)
-    // {
-    //     for ( i = 0; i < 5; i++)
-    //     {
-    //         if (board[pieceChecker] == opposite)
-    //         {
-    //             while ((board[pieceChecker]) == opposite)
-    //             {
-    //                 pieceChecker += DIRECTIONSH[i];
-                    
-    //                 if ((pieceChecker <= 0) || (pieceChecker >= 64) || (pieceChecker % 8 == 0) || ((pieceChecker - 1) % 8 == 0))
-    //                 {
-    //                     return 0;
-    //                 }
-
-    //                 else if (board[pieceChecker] == colour)
-    //                 {
-    //                     return 1;
-    //                 }
-                    
-                    
-    //             }
-                
-    //         }
-            
-    //     }
-        
-    // }
-
-    // else if (((coord - 1) % 8) == 0)
-    // {
-    //     for ( i = 0; i < 5; i++)
-    //     {
-    //         if (board[pieceChecker] == opposite)
-    //         {
-    //             while ((board[pieceChecker]) == opposite)
-    //             {
-    //                 pieceChecker += DIRECTIONSA[i];
-                    
-    //                 if (board[pieceChecker] == colour)
-    //                 {
-    //                     return 1;
-    //                 }
-
-    //                 else if ((pieceChecker <= 0) || (pieceChecker >= 64) || (pieceChecker % 8 == 0) || ((pieceChecker - 1) % 8 == 0))
-    //                 {
-    //                     return 0;
-    //                 }
-                    
-                    
-    //             }
-                
-    //         }
-            
-    //     }
-        
-    // }
     
     if (board[pieceChecker] == opposite)
     {
@@ -543,10 +485,10 @@ int bracketChecker(int coord, int direction, int opposite, int colour, int *boar
                 return 1;
             }
 
-            else if ((pieceChecker <= 0) || (pieceChecker >= 64) || (pieceChecker % 8 == 0) || ((pieceChecker - 1) % 8 == 0))
-            {
-                return 0;
-            }
+            // else if ((pieceChecker <= 0) || (pieceChecker >= 64) || (pieceChecker % 8 == 0) || ((pieceChecker - 1) % 8 == 0))
+            // {
+            //     return 0;
+            // }
 
         }
         
