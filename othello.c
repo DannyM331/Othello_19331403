@@ -153,43 +153,30 @@ boardPrint(int *a)
 
     int i, j, k, counter = 1;
 
-    printf("   a   b   c   d   e   f   g   h  [%s:%d  %s:%d]\n", "BLACK", playerScore(BLACK, a), "WHITE", playerScore(WHITE, a));
+    printf("    a   b   c   d   e   f   g   h  [%s:%d  %s:%d]\n", "BLACK", playerScore(BLACK, a), "WHITE", playerScore(WHITE, a));
     
     for ( i = 0; i < 8; i++)
     {
-        
+        printf("   --- --- --- --- --- --- --- --- \n");
         printf("%d ", i+1);
-        
-        // for ( k = 0; k < 8; k++)
-        // {
-        //     printf(" ___ ");
-        // }
-
-        // printf("\n");
 
         
         for ( j = 0; j < 8; j++)
         {
-            // for ( k = 0; k < 8; k++)
-            // {
-            //     printf(" ___ ");
-            // }
-
-            // printf("\n");
             
             if (a[counter] == 0)
             {
-                printf("|_| ");
+                printf("|   ");
             }
 
             else if (a[counter] == 1)
             {
-                printf("|B| ");
+                printf("| B ");
             }
 
             else
             {
-                printf("|W| ");
+                printf("| W ");
             }
             
             
@@ -197,10 +184,10 @@ boardPrint(int *a)
             counter++;
         }
         
-        printf("\n\n");
+        printf("|\n");
     }
     
-    printf("\n");
+    printf("   --- --- --- --- --- --- --- ---\n");
 
 }
 
