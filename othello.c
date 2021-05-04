@@ -19,7 +19,7 @@ int legalMoveChecker(int colour, int coord, int *board);
 int pieceChange(int move, int colour, int *board, int directions[]);
 int turnTrackerInt(int a);
 int validPosition(int coord, int direction, int opposite, int *board);
-int bracektEdgeChecker(int coord, int direction, int opposite, int colour, int *board);
+int bracketEdgeChecker(int coord, int direction, int opposite, int colour, int *board);
 int bracketChecker(int coord, int direction, int opposite, int colour, int *board);
 int passChecker(int colour, int *board);
 int GameOver(int *board);
@@ -93,7 +93,21 @@ int playgame()
 
                     for (int i = 0; i < 8; i++)
                     {
-                        boardUpdater(Co_Ord, turnCounter, DIRECTIONS[i], board);
+                        if (Co_Ord % 8 == 0)
+                        {
+                            boardUpdater(Co_Ord, turnCounter, DIRECTIONSH[i], board);
+                        }
+
+                        else if ((Co_Ord - 1) % 8 == 0)
+                        {
+                            boardUpdater(Co_Ord, turnCounter, DIRECTIONSA[i], board);
+                        }
+                        
+                        else
+                        {
+                            boardUpdater(Co_Ord, turnCounter, DIRECTIONS[i], board);
+                        }
+                        
                     }
                 
                     boardPrint(board);
@@ -238,16 +252,6 @@ int coordFormula(int x, int y)
     int arrayPosition, z, w;
     z = y;
     w = x;
-
-    // if ((w == 1) && (z == 1))
-    // {
-    //     arrayPosition = (1 * (w * 8)) - 7;
-    // }
-    
-    // else
-    // {
-    //     arrayPosition = (z - 1) * (8) + (w);
-    // }
     
     arrayPosition = (z - 1) * (8) + (w);
     return arrayPosition;
@@ -292,6 +296,25 @@ int boardUpdater(int coord, int b, int direction, int *board)
         opposite = WHITE;
         colour = BLACK;
     }
+
+    if (((coord % 8) == 0) || ((coord - 1) % 8 == 0))
+    {
+        if ((bracketEdgeChecker(coord, direction, opposite, colour, board)) == 1)
+        {
+            do
+            {
+                pieceChecker += direction;
+                if (board[pieceChecker] == opposite)
+                {
+                    needsToFlip[i] = pieceChecker;
+                    i++;
+                }
+            } while (board[pieceChecker] == opposite);
+            
+        }
+        
+    }
+    
 
     if ((bracketChecker(coord, direction, opposite, colour, board)) == 1)
     {
@@ -352,7 +375,7 @@ int legalMoveChecker(int colour, int coord, int *board)
         {
             if ((validPosition(coord, DIRECTIONSH[i], opposite, board)) == 1)
             {
-                if (bracektEdgeChecker(coord, DIRECTIONSH[i], opposite, colour, board) == 1)
+                if (bracketEdgeChecker(coord, DIRECTIONSH[i], opposite, colour, board) == 1)
                 {
                     return 1;
                 }
@@ -369,7 +392,7 @@ int legalMoveChecker(int colour, int coord, int *board)
         {
             if ((validPosition(coord, DIRECTIONSA[i], opposite, board)) == 1)
             {
-                if (bracektEdgeChecker(coord, DIRECTIONSA[i], opposite, colour, board) == 1)
+                if (bracketEdgeChecker(coord, DIRECTIONSA[i], opposite, colour, board) == 1)
                 {
                     return 1;
                 }
@@ -428,20 +451,41 @@ int validPosition(int coord, int direction, int opposite, int *board)
     
 }
 
-int bracektEdgeChecker(int coord, int direction, int opposite, int colour, int *board)
+int bracketEdgeChecker(int coord, int direction, int opposite, int colour, int *board)
 {
 
     int pieceChecker, i;
 
     pieceChecker = coord + direction;
 
-    if (board[pieceChecker] == opposite)
+    if ((board[pieceChecker] == opposite) && ((coord - 1) % 8 != 0))
     {
-        while (((board[pieceChecker]) == opposite) && (pieceChecker > 0) && (pieceChecker < 64) && (pieceChecker % 8 != 0) && ((pieceChecker - 1) % 8 != 0))
+        while ((board[pieceChecker]) == opposite) 
         {
             pieceChecker += direction;
                     
-            if (board[pieceChecker] == colour)
+            if ((board[pieceChecker] == colour) && (pieceChecker > 0) && (pieceChecker < 64) && (pieceChecker % 8 != 0))
+            {
+                return 1;
+            }
+
+            // else if ((pieceChecker <= 0) || (pieceChecker >= 64) || (pieceChecker % 8 == 0) || ((pieceChecker - 1) % 8 == 0))
+            // {
+            //     return 0;
+            // }
+                    
+                    
+        }
+                
+    }
+
+    else if ((board[pieceChecker] == opposite) && (coord % 8 != 0))
+    {
+        while ((board[pieceChecker]) == opposite)
+        {
+            pieceChecker += direction;
+                    
+            if ((board[pieceChecker] == colour) && (pieceChecker > 0) && (pieceChecker < 64) && ((pieceChecker - 1) % 8 != 0))
             {
                 return 1;
             }
