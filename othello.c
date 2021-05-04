@@ -191,14 +191,6 @@ boardPrint(int *a)
 
 }
 
-int numToChar(int a)
-{
-
-    char charArray[3] = "BW";
-    return charArray[a-1];
-
-}
-
 int getMove(char xMove, int yMove)
 {
 
@@ -356,7 +348,7 @@ int legalMoveChecker(int colour, int coord, int *board)
 
     if (((board[coord]) == EMPTY) && ((coord % 8) == 0))
     {
-        for ( i = 0; i < 5; i++)
+        for ( i = 0; i < 8; i++)
         {
             if ((validPosition(coord, DIRECTIONSH[i], opposite, board)) == 1)
             {
@@ -373,7 +365,7 @@ int legalMoveChecker(int colour, int coord, int *board)
 
     else if (((board[coord]) == EMPTY) && (((coord - 1) % 8) == 0))
     {
-        for ( i = 0; i < 5; i++)
+        for ( i = 0; i < 8; i++)
         {
             if ((validPosition(coord, DIRECTIONSA[i], opposite, board)) == 1)
             {
@@ -445,7 +437,7 @@ int bracektEdgeChecker(int coord, int direction, int opposite, int colour, int *
 
     if (board[pieceChecker] == opposite)
     {
-        while ((board[pieceChecker]) == opposite)
+        while (((board[pieceChecker]) == opposite) && (pieceChecker > 0) && (pieceChecker < 64) && (pieceChecker % 8 != 0) && ((pieceChecker - 1) % 8 != 0))
         {
             pieceChecker += direction;
                     
@@ -476,7 +468,7 @@ int bracketChecker(int coord, int direction, int opposite, int colour, int *boar
     if (board[pieceChecker] == opposite)
     {
         
-        while ((board[pieceChecker]) == opposite)
+        while (((board[pieceChecker]) == opposite) && (pieceChecker > 0) && (pieceChecker < 64) && (pieceChecker % 8 != 0) && ((pieceChecker - 1) % 8 != 0))
         {
             pieceChecker += direction;
 
