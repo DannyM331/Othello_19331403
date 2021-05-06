@@ -126,59 +126,6 @@ int playgame()
         {
             printf("%s has no valid moves, you must pass.\n", colour);
         }
-    
-
-        // while (flag == 0)
-        // {
-        //     printf("Enter X Co-Ord\n");
-        //     scanf(" %c", &xMove);
-
-        //     printf("Enter Y Co-Ord\n");
-        //     scanf("%d", &yMove);
-        //     Co_Ord = getMove(xMove, yMove);
-
-        //     if ((passChecker(colourInt, board)) == 1)
-        //     {
-        //         if ((legalMoveChecker(colourInt, Co_Ord, board)) == 1)
-        //         {
-        //             printf("was a legal move\n\n");
-
-        //             for (int i = 0; i < 8; i++)
-        //             {
-        //                 if (Co_Ord % 8 == 0)
-        //                 {
-        //                     boardUpdater(Co_Ord, turnCounter, DIRECTIONSH[i], board);
-        //                 }
-
-        //                 else if ((Co_Ord - 1) % 8 == 0)
-        //                 {
-        //                     boardUpdater(Co_Ord, turnCounter, DIRECTIONSA[i], board);
-        //                 }
-                        
-        //                 else
-        //                 {
-        //                     boardUpdater(Co_Ord, turnCounter, DIRECTIONS[i], board);
-        //                 }
-                        
-        //             }
-                
-        //             boardPrint(board);
-        //             flag = 1;
-        //         }
-
-        //         else
-        //         {
-        //             printf("Invalid Input\n");
-        //         }
-                
-        //     }
-            
-        //     else
-        //     {
-        //         printf("%s has no valid moves, you must pass.\n", colour);
-        //     } 
-  
-        // }
         
         turnCounter++;
     } while ((GameOver(board)) == 0);
@@ -193,12 +140,12 @@ int initialiseBoard()
 
     for ( i = 1; i <= 64; i++)
     {
-        if ((i == 28) || (i == 17))
+        if ((i == 28) || (i == 37))
         {
             board[i] = WHITE;
         }
 
-        else if ((i == 29) || (i == 36) || (i == 9))
+        else if ((i == 29) || (i == 36))
         {
             board[i] = BLACK;
         }
@@ -587,7 +534,6 @@ int passChecker(int colour, int *board)
     {
         if ((legalMoveChecker(colour, i, board)) == 1)
         {
-            printf("%d\n", i);
             return 1;
         }
         
