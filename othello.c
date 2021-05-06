@@ -23,7 +23,7 @@ int bracketEdgeChecker(int coord, int direction, int opposite, int colour, int *
 int bracketChecker(int coord, int direction, int opposite, int colour, int *board);
 int passChecker(int colour, int *board);
 int GameOver(int *board);
-char writeToFile(int black, int white);
+int writeToFile(int black, int white);
 
 int BLACKPLAYER[MAX_NAME];
 int WHITEPLAYER[MAX_NAME];
@@ -142,12 +142,12 @@ int initialiseBoard()
 
     for ( i = 1; i <= 64; i++)
     {
-        if ((i == 28) || (i == 37) || (i == 17) || (i == 24))
+        if ((i == 28) || (i == 37))
         {
             board[i] = WHITE;
         }
 
-        else if ((i == 29) || (i == 36) || (i == 9) || (i == 15))
+        else if ((i == 29) || (i == 36))
         {
             board[i] = BLACK;
         }
@@ -390,13 +390,13 @@ int legalMoveChecker(int colour, int coord, int *board)
     {
         for ( i = 0; i < 5; i++)
         {
-            printf("TestA1\n");
+            //printf("TestA1\n");
             if ((validPosition(coord, DIRECTIONSA[i], opposite, board)) == 1)
             {
-                printf("TestA2\n");
+                //printf("TestA2\n");
                 if (bracketEdgeChecker(coord, DIRECTIONSA[i], opposite, colour, board) == 1)
                 {
-                    printf("TestA3\n");
+                    //printf("TestA3\n");
                     return 1;
                 }
                 
@@ -442,11 +442,11 @@ int validPosition(int coord, int direction, int opposite, int *board)
     int pieceChecker;
     pieceChecker = coord + direction;
 
-    printf("TEST4\n");
+    //printf("TEST4\n");
 
     if (board[pieceChecker] == opposite)
     {
-        printf("TEST5\n");
+        //printf("TEST5\n");
         return 1;
     }
 
@@ -463,15 +463,15 @@ int bracketEdgeChecker(int coord, int direction, int opposite, int colour, int *
 
     if ((board[pieceChecker] == opposite) && ((coord - 1) % 8 == 0))
     {
-        printf("TestA6\n");
+        //printf("TestA6\n");
         while ((board[pieceChecker]) == opposite && (pieceChecker >= 0) && (pieceChecker <= 64) && ((pieceChecker) % 8 != 0)) 
         {
-            printf("TestA7\n");
+            //printf("TestA7\n");
             pieceChecker += direction;
                     
             if (board[pieceChecker] == colour)
             {
-                printf("TestA8\n");
+                //printf("TestA8\n");
                 return 1;
             }
 
@@ -557,12 +557,13 @@ int passChecker(int colour, int *board)
 int GameOver(int *board)
 {
 
+    //FILE *fileptr;
     int blackScore, whiteScore;
 
     blackScore = playerScore(BLACK, board);
     whiteScore = playerScore(WHITE, board);
 
-    if ((((passChecker(BLACK, board)) != 1) && ((passChecker(WHITE, board)) != 1)) || ((blackScore + whiteScore) == 64))
+    if ((((passChecker(BLACK, board)) != 1) && ((passChecker(WHITE, board)) != 1)) || ((blackScore + whiteScore) == 5))
     {
         if (blackScore > whiteScore)
         {
@@ -579,8 +580,34 @@ int GameOver(int *board)
             printf("Its a Draw!\nThe final score was [BLACK:%d  WHITE:%d]\n", blackScore, whiteScore);
         }
         
+        // if ((fopen("othello-results.txt", "w")) == NULL)
+        // {
+        //     printf("Could not find / open othello-results.txt.\n");
+        // }
 
+        // else
+        // {
+        //     if (blackScore > whiteScore)
+        //     {
+        //         fprintf(fileptr, "%s Won! The score was [%s (Black):%d %s (White):%d]\n", BLACKPLAYER, BLACKPLAYER, blackScore, WHITEPLAYER, whiteScore);
+        //     }
+
+        //     else if (whiteScore > blackScore)
+        //     {
+        //     fprintf(fileptr, "%s Won! The score was [%s (Black):%d %s (White):%d]\n", WHITEPLAYER, BLACKPLAYER, blackScore, WHITEPLAYER, whiteScore);
+        //     }
+
+        //     else
+        //     {
+        //     fprintf(fileptr, "Its a Draw! The score was [%s (Black):%d %s (White):%d]\n", BLACKPLAYER, blackScore, WHITEPLAYER, whiteScore);
+        //     }
         
+        
+        
+        // }
+
+        // fclose(fileptr);
+
         writeToFile(blackScore, whiteScore);
         
         return 1;
@@ -589,16 +616,17 @@ int GameOver(int *board)
     else
     {
         return 0;
+        //fclose(fileptr);
     }
     
 }
 
-char writeToFile(int black, int white)
+int writeToFile(int black, int white)
 {
 
     FILE *fileptr;
 
-    if ((fopen("othello-results.txt", "w")) == NULL)
+    if (fileptr =(fopen("othello-results.txt", "w")) == NULL)
     {
         printf("Could not find / open othello-results.txt.\n");
     }
@@ -620,10 +648,11 @@ char writeToFile(int black, int white)
             fprintf(fileptr, "Its a Draw! The score was [%s (Black):%d %s (White):%d]\n", BLACKPLAYER, black, WHITEPLAYER, white);
         }
         
-        
+        printf("The results have been posted into othello-results.txt!\n");
         
     }
 
     fclose(fileptr);
+    return 0;
 
 }
