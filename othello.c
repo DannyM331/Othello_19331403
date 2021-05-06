@@ -142,12 +142,12 @@ int initialiseBoard()
 
     for ( i = 1; i <= 64; i++)
     {
-        if ((i == 28) || (i == 37))
+        if ((i == 28) || (i == 37) || (i == 17) || (i == 24))
         {
             board[i] = WHITE;
         }
 
-        else if ((i == 29) || (i == 36))
+        else if ((i == 29) || (i == 36) || (i == 9) || (i == 15))
         {
             board[i] = BLACK;
         }
@@ -316,7 +316,7 @@ int boardUpdater(int coord, int b, int direction, int *board)
     }
     
 
-    if ((bracketChecker(coord, direction, opposite, colour, board)) == 1)
+    else if ((bracketChecker(coord, direction, opposite, colour, board)) == 1)
     {
         do
         {
@@ -371,7 +371,7 @@ int legalMoveChecker(int colour, int coord, int *board)
 
     if (((board[coord]) == EMPTY) && ((coord % 8) == 0))
     {
-        for ( i = 0; i < 8; i++)
+        for ( i = 0; i < 5; i++)
         {
             if ((validPosition(coord, DIRECTIONSH[i], opposite, board)) == 1)
             {
@@ -388,12 +388,15 @@ int legalMoveChecker(int colour, int coord, int *board)
 
     else if (((board[coord]) == EMPTY) && (((coord - 1) % 8) == 0))
     {
-        for ( i = 0; i < 8; i++)
+        for ( i = 0; i < 5; i++)
         {
+            printf("TestA1\n");
             if ((validPosition(coord, DIRECTIONSA[i], opposite, board)) == 1)
             {
+                printf("TestA2\n");
                 if (bracketEdgeChecker(coord, DIRECTIONSA[i], opposite, colour, board) == 1)
                 {
+                    printf("TestA3\n");
                     return 1;
                 }
                 
@@ -439,11 +442,11 @@ int validPosition(int coord, int direction, int opposite, int *board)
     int pieceChecker;
     pieceChecker = coord + direction;
 
-    //printf("TEST4\n");
+    printf("TEST4\n");
 
     if (board[pieceChecker] == opposite)
     {
-        //printf("TEST5\n");
+        printf("TEST5\n");
         return 1;
     }
 
@@ -458,14 +461,17 @@ int bracketEdgeChecker(int coord, int direction, int opposite, int colour, int *
 
     pieceChecker = coord + direction;
 
-    if ((board[pieceChecker] == opposite) && ((coord - 1) % 8 != 0))
+    if ((board[pieceChecker] == opposite) && ((coord - 1) % 8 == 0))
     {
-        while ((board[pieceChecker]) == opposite) 
+        printf("TestA6\n");
+        while ((board[pieceChecker]) == opposite && (pieceChecker >= 0) && (pieceChecker <= 64) && ((pieceChecker) % 8 != 0)) 
         {
+            printf("TestA7\n");
             pieceChecker += direction;
                     
-            if ((board[pieceChecker] == colour) && (pieceChecker > 0) && (pieceChecker < 64) && (pieceChecker % 8 != 0))
+            if (board[pieceChecker] == colour)
             {
+                printf("TestA8\n");
                 return 1;
             }
 
@@ -479,13 +485,13 @@ int bracketEdgeChecker(int coord, int direction, int opposite, int colour, int *
                 
     }
 
-    else if ((board[pieceChecker] == opposite) && (coord % 8 != 0))
+    else if ((board[pieceChecker] == opposite) && (coord % 8 == 0))
     {
-        while ((board[pieceChecker]) == opposite)
+        while ((board[pieceChecker]) == opposite && (pieceChecker >= 0) && (pieceChecker <= 64) && ((pieceChecker - 1) % 8 != 0))
         {
             pieceChecker += direction;
                     
-            if ((board[pieceChecker] == colour) && (pieceChecker > 0) && (pieceChecker < 64) && ((pieceChecker - 1) % 8 != 0))
+            if (board[pieceChecker] == colour)
             {
                 return 1;
             }
@@ -556,7 +562,7 @@ int GameOver(int *board)
     blackScore = playerScore(BLACK, board);
     whiteScore = playerScore(WHITE, board);
 
-    if (((passChecker(BLACK, board)) != 1) && ((passChecker(WHITE, board)) != 1) || ((blackScore + whiteScore) == 64))
+    if ((((passChecker(BLACK, board)) != 1) && ((passChecker(WHITE, board)) != 1)) || ((blackScore + whiteScore) == 64))
     {
         if (blackScore > whiteScore)
         {
@@ -567,6 +573,12 @@ int GameOver(int *board)
         {
             printf("White - %s has won the game!\nThe final score was [BLACK:%d  WHITE:%d]\n", WHITEPLAYER, blackScore, whiteScore);
         }
+
+        else
+        {
+            printf("Its a Draw!\nThe final score was [BLACK:%d  WHITE:%d]\n", blackScore, whiteScore);
+        }
+        
 
         
         writeToFile(blackScore, whiteScore);
@@ -598,12 +610,20 @@ char writeToFile(int black, int white)
             fprintf(fileptr, "%s Won! The score was [%s (Black):%d %s (White):%d]\n", BLACKPLAYER, BLACKPLAYER, black, WHITEPLAYER, white);
         }
 
-        else
+        else if (white > black)
         {
             fprintf(fileptr, "%s Won! The score was [%s (Black):%d %s (White):%d]\n", WHITEPLAYER, BLACKPLAYER, black, WHITEPLAYER, white);
         }
+
+        else
+        {
+            fprintf(fileptr, "Its a Draw! The score was [%s (Black):%d %s (White):%d]\n", BLACKPLAYER, black, WHITEPLAYER, white);
+        }
+        
         
         
     }
+
+    fclose(fileptr);
 
 }
