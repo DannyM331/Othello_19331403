@@ -74,19 +74,17 @@ int playgame()
         colourInt = turnTrackerInt(turnCounter);
         printf("Your turn %s.\n", colour);
         flag = 0;
-
-        while (flag == 0)
+        if ((passChecker(colourInt, board)) == 1)
         {
-            //flag = 0;
-            printf("Enter X Co-Ord\n");
-            scanf(" %c", &xMove);
-
-            printf("Enter Y Co-Ord\n");
-            scanf("%d", &yMove);
-            Co_Ord = getMove(xMove, yMove);
-
-            if ((passChecker(colourInt, board)) == 1)
+            while (flag == 0)
             {
+                printf("Enter X Co-Ord\n");
+                scanf(" %c", &xMove);
+
+                printf("Enter Y Co-Ord\n");
+                scanf("%d", &yMove);
+                Co_Ord = getMove(xMove, yMove);
+
                 if ((legalMoveChecker(colourInt, Co_Ord, board)) == 1)
                 {
                     printf("was a legal move\n\n");
@@ -120,14 +118,67 @@ int playgame()
                 }
                 
             }
-            
-            else
-            {
-                printf("%s has no valid moves, you must pass.\n", colour);
-            }
-            
+         
   
         }
+
+        else
+        {
+            printf("%s has no valid moves, you must pass.\n", colour);
+        }
+    
+
+        // while (flag == 0)
+        // {
+        //     printf("Enter X Co-Ord\n");
+        //     scanf(" %c", &xMove);
+
+        //     printf("Enter Y Co-Ord\n");
+        //     scanf("%d", &yMove);
+        //     Co_Ord = getMove(xMove, yMove);
+
+        //     if ((passChecker(colourInt, board)) == 1)
+        //     {
+        //         if ((legalMoveChecker(colourInt, Co_Ord, board)) == 1)
+        //         {
+        //             printf("was a legal move\n\n");
+
+        //             for (int i = 0; i < 8; i++)
+        //             {
+        //                 if (Co_Ord % 8 == 0)
+        //                 {
+        //                     boardUpdater(Co_Ord, turnCounter, DIRECTIONSH[i], board);
+        //                 }
+
+        //                 else if ((Co_Ord - 1) % 8 == 0)
+        //                 {
+        //                     boardUpdater(Co_Ord, turnCounter, DIRECTIONSA[i], board);
+        //                 }
+                        
+        //                 else
+        //                 {
+        //                     boardUpdater(Co_Ord, turnCounter, DIRECTIONS[i], board);
+        //                 }
+                        
+        //             }
+                
+        //             boardPrint(board);
+        //             flag = 1;
+        //         }
+
+        //         else
+        //         {
+        //             printf("Invalid Input\n");
+        //         }
+                
+        //     }
+            
+        //     else
+        //     {
+        //         printf("%s has no valid moves, you must pass.\n", colour);
+        //     } 
+  
+        // }
         
         turnCounter++;
     } while ((GameOver(board)) == 0);
@@ -142,12 +193,12 @@ int initialiseBoard()
 
     for ( i = 1; i <= 64; i++)
     {
-        if ((i == 28) || (i == 37))
+        if ((i == 28) || (i == 17))
         {
             board[i] = WHITE;
         }
 
-        else if ((i == 29) || (i == 36))
+        else if ((i == 29) || (i == 36) || (i == 9))
         {
             board[i] = BLACK;
         }
@@ -192,8 +243,6 @@ boardPrint(int *a)
             {
                 printf("| W ");
             }
-            
-            
             
             counter++;
         }
@@ -383,6 +432,7 @@ int legalMoveChecker(int colour, int coord, int *board)
             }
             
         }
+        return 0;
         
     }
 
@@ -403,6 +453,7 @@ int legalMoveChecker(int colour, int coord, int *board)
             }
             
         }
+        return 0;
         
     }
     
@@ -425,6 +476,8 @@ int legalMoveChecker(int colour, int coord, int *board)
             }
             
         }
+
+        return 0;
         
     }
 
@@ -473,13 +526,7 @@ int bracketEdgeChecker(int coord, int direction, int opposite, int colour, int *
             {
                 //printf("TestA8\n");
                 return 1;
-            }
-
-            // else if ((pieceChecker <= 0) || (pieceChecker >= 64) || (pieceChecker % 8 == 0) || ((pieceChecker - 1) % 8 == 0))
-            // {
-            //     return 0;
-            // }
-                    
+            }        
                     
         }
                 
@@ -495,16 +542,12 @@ int bracketEdgeChecker(int coord, int direction, int opposite, int colour, int *
             {
                 return 1;
             }
-
-            // else if ((pieceChecker <= 0) || (pieceChecker >= 64) || (pieceChecker % 8 == 0) || ((pieceChecker - 1) % 8 == 0))
-            // {
-            //     return 0;
-            // }
-                    
-                    
+         
         }
                 
     }
+
+    return 0;
 
 }
 
@@ -527,14 +570,11 @@ int bracketChecker(int coord, int direction, int opposite, int colour, int *boar
                 return 1;
             }
 
-            // else if ((pieceChecker <= 0) || (pieceChecker >= 64) || (pieceChecker % 8 == 0) || ((pieceChecker - 1) % 8 == 0))
-            // {
-            //     return 0;
-            // }
-
         }
         
     }
+
+    return 0;
 
 }
 
@@ -547,17 +587,19 @@ int passChecker(int colour, int *board)
     {
         if ((legalMoveChecker(colour, i, board)) == 1)
         {
+            printf("%d\n", i);
             return 1;
         }
         
     }
+
+    return 0;
 
 }
 
 int GameOver(int *board)
 {
 
-    //FILE *fileptr;
     int blackScore, whiteScore;
 
     blackScore = playerScore(BLACK, board);
@@ -580,33 +622,7 @@ int GameOver(int *board)
             printf("Its a Draw!\nThe final score was [BLACK:%d  WHITE:%d]\n", blackScore, whiteScore);
         }
         
-        // if ((fopen("othello-results.txt", "w")) == NULL)
-        // {
-        //     printf("Could not find / open othello-results.txt.\n");
-        // }
-
-        // else
-        // {
-        //     if (blackScore > whiteScore)
-        //     {
-        //         fprintf(fileptr, "%s Won! The score was [%s (Black):%d %s (White):%d]\n", BLACKPLAYER, BLACKPLAYER, blackScore, WHITEPLAYER, whiteScore);
-        //     }
-
-        //     else if (whiteScore > blackScore)
-        //     {
-        //     fprintf(fileptr, "%s Won! The score was [%s (Black):%d %s (White):%d]\n", WHITEPLAYER, BLACKPLAYER, blackScore, WHITEPLAYER, whiteScore);
-        //     }
-
-        //     else
-        //     {
-        //     fprintf(fileptr, "Its a Draw! The score was [%s (Black):%d %s (White):%d]\n", BLACKPLAYER, blackScore, WHITEPLAYER, whiteScore);
-        //     }
         
-        
-        
-        // }
-
-        // fclose(fileptr);
 
         writeToFile(blackScore, whiteScore);
         
@@ -616,7 +632,6 @@ int GameOver(int *board)
     else
     {
         return 0;
-        //fclose(fileptr);
     }
     
 }
