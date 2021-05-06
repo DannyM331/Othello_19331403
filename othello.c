@@ -551,7 +551,7 @@ int GameOver(int *board)
     blackScore = playerScore(BLACK, board);
     whiteScore = playerScore(WHITE, board);
 
-    if ((((passChecker(BLACK, board)) != 1) && ((passChecker(WHITE, board)) != 1)) || ((blackScore + whiteScore) == 5))
+    if ((((passChecker(BLACK, board)) != 1) && ((passChecker(WHITE, board)) != 1)) || ((blackScore + whiteScore) == 64))
     {
         if (blackScore > whiteScore)
         {
@@ -585,9 +585,10 @@ int GameOver(int *board)
 int writeToFile(int black, int white)
 {
 
-    FILE *fileptr;
+    FILE *fp = fopen("othello-results.txt", "w");
+    fopen("othello-results.txt", "w");
 
-    if (fileptr =(fopen("othello-results.txt", "w")) == NULL)
+    if (fp == NULL)
     {
         printf("Could not find / open othello-results.txt.\n");
     }
@@ -596,24 +597,27 @@ int writeToFile(int black, int white)
     {
         if (black > white)
         {
-            fprintf(fileptr, "%s Won! The score was [%s (Black):%d %s (White):%d]\n", BLACKPLAYER, BLACKPLAYER, black, WHITEPLAYER, white);
+            fprintf(fp, "%s Won! The score was [%s (Black):%d %s (White):%d]\n", BLACKPLAYER, BLACKPLAYER, black, WHITEPLAYER, white);
+            printf("Print1\n");
         }
 
         else if (white > black)
         {
-            fprintf(fileptr, "%s Won! The score was [%s (Black):%d %s (White):%d]\n", WHITEPLAYER, BLACKPLAYER, black, WHITEPLAYER, white);
+            fprintf(fp, "%s Won! The score was [%s (Black):%d %s (White):%d]\n", WHITEPLAYER, BLACKPLAYER, black, WHITEPLAYER, white);
+            printf("Print2\n");
         }
 
         else
         {
-            fprintf(fileptr, "Its a Draw! The score was [%s (Black):%d %s (White):%d]\n", BLACKPLAYER, black, WHITEPLAYER, white);
+            fprintf(fp, "Its a Draw! The score was [%s (Black):%d %s (White):%d]\n", BLACKPLAYER, black, WHITEPLAYER, white);
+            printf("Print3\n");
         }
         
         printf("The results have been posted into othello-results.txt!\n");
         
     }
 
-    fclose(fileptr);
+    fclose(fp);
     return 0;
 
 }
