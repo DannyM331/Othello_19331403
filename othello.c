@@ -598,19 +598,19 @@ int writeToFile(int black, int white)
         if (black > white)
         {
             fprintf(fp, "%s Won! The score was [%s (Black):%d %s (White):%d]\n", BLACKPLAYER, BLACKPLAYER, black, WHITEPLAYER, white);
-            printf("Print1\n");
+            //printf("Print1\n");
         }
 
         else if (white > black)
         {
             fprintf(fp, "%s Won! The score was [%s (Black):%d %s (White):%d]\n", WHITEPLAYER, BLACKPLAYER, black, WHITEPLAYER, white);
-            printf("Print2\n");
+            //printf("Print2\n");
         }
 
         else
         {
             fprintf(fp, "Its a Draw! The score was [%s (Black):%d %s (White):%d]\n", BLACKPLAYER, black, WHITEPLAYER, white);
-            printf("Print3\n");
+            //printf("Print3\n");
         }
         
         printf("The results have been posted into othello-results.txt!\n");
