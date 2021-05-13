@@ -1,3 +1,4 @@
+#ifndef othello
 /* These are the libarys that i used */
 #include <stdio.h>
 #include <math.h>
@@ -38,3 +39,5 @@ int DIRECTIONSA[5] = {-8,-7,1,8,9};//These are the possible directions that the 
 int EMPTY=0;
 int BLACK=1;
 int WHITE=2;
+#define othello
+#endif

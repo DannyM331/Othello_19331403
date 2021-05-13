@@ -2,7 +2,7 @@
 
 int writeToFile(int black, int white)
 {
-    FILE *fp = fopen("othello-results.txt", "w");//set the file pointer "fp" to open "othello-results.txt"
+    FILE *fp = fopen("othello-results.txt", "w+");//set the file pointer "fp" to open "othello-results.txt"
 
     /* These set the time */
     time_t t;
