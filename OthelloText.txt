@@ -1,0 +1,12 @@
+When I was writing the program, i found that using a single 1D array was perfect for implementing the board. It is 65 numbers long and is filled with either 0 for an empty space, 1 for a black space or 2 for a white space. 
+When it came to printing the board, it goes through the array, and every 8 index theres a new characheter so we get an 8x8 board. when the array comes across a 0, it prints an empty space, a 1 it prints a black piece and 2 it prints a white piece.
+Having it in a single array makes it very easy to manipulate when it come to checking moves and updating the board.
+
+I used a single array over stuctures as i asked john if i could and he never responded to me.
+
+For game logic I implemented multiple functions that can be called continuosly that check for individual test cases. My over arching function is called LegalMoveChekcer that has all the funcitons in it required to check if infact it is a legal move.
+Once ive found a valid move, i update the board by finding a valid bracketing piece and flip all the pieces inbetween the brackets.
+
+I have a checker in that checks if the next person has a valid move, once it finds 1 valid move it allows the user to implement a move. If the user has no valid moves it forces them to pass to the other player.
+
+The wincondition is calculated when both players have no valid moves, it then counts up the score of each player and prints it to the file called othello-results.txt.
