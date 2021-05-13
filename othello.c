@@ -9,6 +9,7 @@
 #include <math.h>
 #include <stdlib.h>
 #include <string.h>
+#include <time.h>
 
 #define MAX_NAME 20 // The max lenght of a name.
 
@@ -530,7 +531,7 @@ int GameOver(int *board)
     blackScore = playerScore(BLACK, board);//set "blackscore" to equal Blacks's score
     whiteScore = playerScore(WHITE, board);//set "whitescore" to equal Whites'S score
 
-    if ((((passChecker(BLACK, board)) != 1) && ((passChecker(WHITE, board)) != 1)) || ((blackScore + whiteScore) == 64))//if black and white have no valid moves or the total score is 64, enter the if statment
+    if ((((passChecker(BLACK, board)) != 1) && ((passChecker(WHITE, board)) != 1)) || ((blackScore + whiteScore) == 5))//if black and white have no valid moves or the total score is 64, enter the if statment
     {
         if (blackScore > whiteScore)//if black won, enter this if statment
         {
@@ -563,6 +564,10 @@ int writeToFile(int black, int white)
 {
     FILE *fp = fopen("othello-results.txt", "w");//set the file pointer "fp" to open "othello-results.txt"
 
+    /* These set the time */
+    time_t t;
+    time(&t);
+
     if (fp == NULL)//if fp = null, enter this if statment
     {
         printf("Could not find / open othello-results.txt.\n");
@@ -572,17 +577,17 @@ int writeToFile(int black, int white)
     {
         if (black > white)//if black won, enter this if statment
         {
-            fprintf(fp, "%s Won! The score was [%s (Black):%d %s (White):%d]\n", BLACKPLAYER, BLACKPLAYER, black, WHITEPLAYER, white);
+            fprintf(fp, "%s Won! The score was [%s (Black):%d %s (White):%d] - %s\n", BLACKPLAYER, BLACKPLAYER, black, WHITEPLAYER, white, ctime(&t));
         }
 
         else if (white > black)//if white won, enter this if statment
         {
-            fprintf(fp, "%s Won! The score was [%s (Black):%d %s (White):%d]\n", WHITEPLAYER, BLACKPLAYER, black, WHITEPLAYER, white);
+            fprintf(fp, "%s Won! The score was [%s (Black):%d %s (White):%d] - %s\n", WHITEPLAYER, BLACKPLAYER, black, WHITEPLAYER, white, ctime(&t));
         }
 
         else//if neither won, enter this if statment
         {
-            fprintf(fp, "Its a Draw! The score was [%s (Black):%d %s (White):%d]\n", BLACKPLAYER, black, WHITEPLAYER, white);
+            fprintf(fp, "Its a Draw! The score was [%s (Black):%d %s (White):%d] - %s\n", BLACKPLAYER, black, WHITEPLAYER, white,  ctime(&t));
         }
         
         printf("\nThe results have been posted into othello-results.txt!\n");
