@@ -7,7 +7,7 @@ int GameOver(int *board)
     blackScore = playerScore(BLACK, board);//set "blackscore" to equal Blacks's score
     whiteScore = playerScore(WHITE, board);//set "whitescore" to equal Whites'S score
 
-    if ((((passChecker(BLACK, board)) != 1) && ((passChecker(WHITE, board)) != 1)) || ((blackScore + whiteScore) == 5))//if black and white have no valid moves or the total score is 64, enter the if statment
+    if ((((passChecker(BLACK, board)) != 1) && ((passChecker(WHITE, board)) != 1)) || ((blackScore + whiteScore) == 64))//if black and white have no valid moves or the total score is 64, enter the if statment
     {
         if (blackScore > whiteScore)//if black won, enter this if statment
         {
